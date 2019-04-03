@@ -1,0 +1,27 @@
+{
+  "name": "node-blog",
+  "version": "1.0.0",
+  "description": "使用node搭建的个人博客系统",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mimof9/node-blog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mimof9/node-blog/issues"
+  },
+  "homepage": "https://github.com/mimof9/node-blog#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookies": "^0.7.3",
+    "express": "^4.16.4",
+    "markdown": "^0.5.0",
+    "mongoose": "^5.4.21",
+    "swig": "^1.4.2"
+  }
+}
