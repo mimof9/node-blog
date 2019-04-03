@@ -60,4 +60,4 @@ mongoose.connect('mongodb://localhost:27018/blog', { useNewUrlParser: true }, fu
         app.listen(8081);
     }
 }, {useNewUrlParser: true})
-
+app.listen(8081);
