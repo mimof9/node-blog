@@ -3,3 +3,12 @@
 
 #node模块
 node_modules
+
+#mongodb
+db/diagnostic.data
+db/journal
+db/*.wt
+db/*.lock
+db/*.bson
+db/*.turtle
+db/WiredTiger

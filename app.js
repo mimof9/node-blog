@@ -3,7 +3,8 @@
  */
 
 var express = require('express'); // 加载express模块
-var swig = require('swig'); // 加载模板处理模块
+var swig = require('swig'); // 加载模板模块
+var mongoose = require('mongoose'); // 记载数据库模块
 
 // 创建app应用  =>  NodeJS Http.createServer();
 var app = express();
@@ -49,5 +50,14 @@ app.use('/api', require('./routers/api'))
 //     res.send('body {background: red;}');
 // })
 
-// 监听http请求
-app.listen(8081);
+// 连接数据库, 在应用启动时连接一次数据库，当数据库连接成功时，才监听端口
+mongoose.connect('mongodb://localhost:27018/blog', { useNewUrlParser: true }, function(err) {
+    if (err) {
+        console.log('数据库连接失败');
+    } else {
+        console.log('数据库连接成功');
+        // 监听http请求
+        app.listen(8081);
+    }
+}, {useNewUrlParser: true})
+

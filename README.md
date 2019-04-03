@@ -66,3 +66,10 @@ app.use('/', require('./router/main'));
 app.use('/admin', require('./router/admin'));
 app.use('/api', require('./router/api'))
 ```
+
+## 数据库模块mongoose
+### mongoose工作的大致流程：
+- 定义表结构对象
+- 根据表结构对象创建模型构造函数
+- 使用模型构造函数创建模型对象
+- 直接操作模型对象，就是对表的操作
