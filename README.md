@@ -33,10 +33,36 @@
 ## 技术选型
 ### NodeJS：核心开发语言
 ### Express：web应用框架
-### Mongodb：数据库
+### Mongodb
 ### 第三方模块&中间件
 - bodyParser：解析post请求数据
 - cookies：读/写cookie
 - swig：模板解析引擎
 - mongoose：操作mongodb数据
 - markdown：markdown语法解析生成模块
+
+## web开发的大体思路
+- 浏览器发送http请求
+- 服务器接收到url
+- 从url中解析路由
+- 根据路由解析结果找到处理本次请求的函数
+- 执行指定的绑定函数，返回对应内容给用户
+
+### 静态资源
+- url以/public开头
+- 直接读取指定目录下的文件，返回给用户
+### 动态路由
+- 处理业务逻辑，加载模板，解析模板
+- 返回数据给用户
+
+## 模块化
+### 按照功能划分
+- 前台模块
+- 后台模块
+- api模块
+### 具体使用Express的app.use()方法实现模块化
+```
+app.use('/', require('./router/main'));
+app.use('/admin', require('./router/admin'));
+app.use('/api', require('./router/api'))
+```
