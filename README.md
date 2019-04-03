@@ -30,3 +30,13 @@
 		- 查看指定博文的评论
 	- 删除评论
 
+## 技术选型
+### NodeJS：核心开发语言
+### Express：web应用框架
+### Mongodb：数据库
+### 第三方模块&中间件
+- bodyParser：解析post请求数据
+- cookies：读/写cookie
+- swig：模板解析引擎
+- mongoose：操作mongodb数据
+- markdown：markdown语法解析生成模块
