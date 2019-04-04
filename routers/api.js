@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
 var User = require('../models/User')
 
 // 统一的返回格式
@@ -9,12 +9,12 @@ router.use(function(req, res, next) {
         code: 0,
         message: ''
     }
-    next();
+    next()
 })
 
 router.get('/', function(req, res, next) {
-    res.send('api请求地址');
-});
+    res.send('api请求地址')
+})
 
 /*
 用户注册
@@ -111,4 +111,4 @@ router.get('/user/logout', function(req, res, next) {
     res.json(responseData)
 })
 
-module.exports = router;
+module.exports = router
