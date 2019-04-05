@@ -81,7 +81,7 @@ app.use('/api', require('./routers/api'))
 // })
 
 // 连接数据库, 在应用启动时连接一次数据库，当数据库连接成功时，才监听端口
-mongoose.connect('mongodb://localhost:27018/blog', { useNewUrlParser: true }, function(err) {
+mongoose.connect('mongodb://localhost:27017/blog', { useNewUrlParser: true }, function(err) {
     if (err) {
         console.log('数据库连接失败')
     } else {

@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 var User = require('../models/User')
+var Content = require('../models/Content')
 
 // 统一的返回格式
 var responseData;
@@ -109,6 +110,37 @@ router.post('/user/login', function(req, res, next) {
 router.get('/user/logout', function(req, res, next) {
     req.cookies.set('userInfo', null)
     res.json(responseData)
+})
+
+// 提交评论
+router.post('/comment/post', function(req, res, next) {
+    var contentId = req.body.contentid || ''
+    var postData = {
+        username: req.userInfo.username,
+        postTime: new Date(),
+        content: req.body.content
+    }
+    Content.findOne({
+        _id: contentId
+    }).then(function(content) {
+        content.comments.push(postData)
+        return content.save()
+    }).then(function(newContent) {
+        responseData.message = '评论成功'
+        responseData.data = newContent
+        res.json(responseData)
+    })
+})
+
+// 获取所有评论
+router.get('/comment', function(req, res) {
+    var contentId = req.query.contentid || ''
+    Content.findOne({
+        _id: contentId
+    }).then(function(content) {
+        responseData.data = content.comments
+        res.json(responseData)
+    })
 })
 
 module.exports = router
