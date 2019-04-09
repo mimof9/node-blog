@@ -7,7 +7,7 @@
     <h1>{{content.title}}</h1>
     <p class="colDefault">
         作者：<span class="colInfo">{{content.user.username}}</span> -
-        时间：<span class="colInfo">{{content.addTime | date('Y-m-d H:i:s', -8*60)}}</span> -
+        时间：<span class="colInfo">{{content.addTime | formattime}}</span> -
         阅读：<span class="colInfo">{{content.views}}</span> -
         评论：<span class="colInfo">{{content.comments.length}}</span>
     </p>
@@ -32,7 +32,7 @@
         <li class="next">
             {% if page >= pages %}
             <span>没有下一页了</span>
-            {% else%}
+            {% else %}
             <a href="/?category={{category}}&page={{page+1}}">下一页</a>
             {% endif %}
         </li>

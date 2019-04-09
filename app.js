@@ -17,10 +17,15 @@ var app = express()
 app.use('/public', express.static(__dirname + '/public'))
 
 // 配置模板引擎
-nunjucks.configure('views', {
+var env = nunjucks.configure('views', {
     autoescape: true,
     express: app,
     noCache: true
+})
+// 给模板添加过滤器
+env.addFilter('formattime', function(time) {
+    return time.getFullYear() + '-' + (time.getMonth()+1) + '-' + time.getDate() + ' '
+    + time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds()
 })
 
 // 配置bodyParser
