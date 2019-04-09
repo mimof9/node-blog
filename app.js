@@ -3,7 +3,6 @@
  */
 
 var express = require('express') // 加载express模块
-var swig = require('swig') // swig模板引擎
 var nunjucks = require('nunjucks') // nunjucks模板引擎
 var mongoose = require('mongoose') // 加载数据库模块
 var bodyParser = require('body-parser') // 解析url请求中的数据
@@ -23,6 +22,7 @@ nunjucks.configure('views', {
     express: app,
     noCache: true
 })
+
 // 配置bodyParser
 // 调用这个方法，会自动在路由回调的req中添加上请求携带的数据body
 // 要在配置路由之前调用(这个根据一个请求的处理顺序 很容易理解)

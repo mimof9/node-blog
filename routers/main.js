@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
             start = pageSize * (page - 1),
             pages = 0,
             count = 0,
-            category = req.query.category || ''  // 分类查询
+            category = req.query.category || '' // 分类查询
             where = {}
         if (category) {
             where.category = category
@@ -40,7 +40,7 @@ router.get('/', function(req, res, next) {
                 .sort({addTime: -1})
                 .where(where)
                 .then(function(contents) {
-                    res.render('main/index', {
+                    res.render('main/index.html', {
                         userInfo: req.userInfo,
                         categories: categories,
                         category: category,
