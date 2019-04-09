@@ -135,11 +135,14 @@ router.post('/comment/post', function(req, res, next) {
 // 获取所有评论
 router.get('/comment', function(req, res) {
     var contentId = req.query.contentid || ''
+    console.log(req.query)
     Content.findOne({
         _id: contentId
     }).then(function(content) {
         responseData.data = content.comments
         res.json(responseData)
+    }).catch(function(err) {
+        console.log(err)
     })
 })
 

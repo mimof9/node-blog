@@ -66,8 +66,9 @@ router.get('/view', function(req, res, next) {
         // 阅读数统计真的简单
         content.views++
         content.save()
-        res.render('main/view', data)
+        res.render('main/view.html', data)
     })
+
 })
 
 module.exports = router
