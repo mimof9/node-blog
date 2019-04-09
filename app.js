@@ -3,7 +3,8 @@
  */
 
 var express = require('express') // 加载express模块
-var swig = require('swig') // 加载模板模块
+var swig = require('swig') // swig模板引擎
+var nunjucks = require('nunjucks') // nunjucks模板引擎
 var mongoose = require('mongoose') // 加载数据库模块
 var bodyParser = require('body-parser') // 解析url请求中的数据
 var cookies = require('cookies') // 加载cookies模块
@@ -16,17 +17,12 @@ var app = express()
 // 具体作用：当用户访问的url以/public开始，那么直接返回项目目录/public下的文件
 app.use('/public', express.static(__dirname + '/public'))
 
-// 配置应用模板
-// 定义当前应用所使用的模板引擎
-// 第一个参数：模板引擎的名称，同时也是模板文件的后缀，第二个参数表示用于解析处理模板内容的方法
-app.engine('html', swig.renderFile)
-// 设置模板文件存放的目录
-app.set('views', './views')
-// 注册所使用的模板引擎，第一个参数是'view engine'，第二个参数就是前面定义的模板引擎的第一个参数
-app.set('view engine', 'html')
-// 在开发过程中，需要取消模板缓存
-swig.setDefaults({cache: false})
-
+// 配置模板引擎
+nunjucks.configure('views', {
+    autoescape: true,
+    express: app,
+    noCache: true
+})
 // 配置bodyParser
 // 调用这个方法，会自动在路由回调的req中添加上请求携带的数据body
 // 要在配置路由之前调用(这个根据一个请求的处理顺序 很容易理解)
