@@ -15,7 +15,7 @@ router.use(function(req, res, next) {
 
 // 后台主页
 router.get('/', function(req, res, next) {
-    res.render('admin/index', {
+    res.render('admin/index.html', {
         userInfo: req.userInfo
     })
 })
@@ -42,7 +42,7 @@ router.get('/user', function(req, res, next) {
         start = pageSize * (page - 1)
 
         User.find().limit(pageSize).skip(start).then(function(users) {
-            res.render('admin/user_index', {
+            res.render('admin/user_index.html', {
                 userInfo: req.userInfo,
                 users: users,
                 page: page,
@@ -69,7 +69,7 @@ router.get('/category', function(req, res, next) {
         start = pageSize * (page - 1)
 
         Category.find().sort({_id: -1}).limit(pageSize).skip(start).then(function(categories) {
-            res.render('admin/category_index', {
+            res.render('admin/category_index.html', {
                 userInfo: req.userInfo,
                 categories: categories,
                 page: page,
@@ -83,7 +83,7 @@ router.get('/category', function(req, res, next) {
 
 // 分类操作页
 router.get('/category/add', function(req, res, next) {
-    res.render('admin/category_add', {
+    res.render('admin/category_add.html', {
         userInfo: req.userInfo
     })
 })
@@ -92,7 +92,7 @@ router.get('/category/add', function(req, res, next) {
 router.post('/category/add', function(req, res, next) {
     var name = req.body.name || ''
     if (name === '') {
-        res.render('admin/error', {
+        res.render('admin/error.html', {
             userInfo: req.userInfo,
             message: '名称不能为空'
         })
@@ -103,7 +103,7 @@ router.post('/category/add', function(req, res, next) {
         name: name
     }).then(function(rs) {
         if (rs) {
-            res.render('admin/error', {
+            res.render('admin/error.html', {
                 userInfo: req.userInfo,
                 message: '分类已经存在了'
             })
@@ -114,7 +114,7 @@ router.post('/category/add', function(req, res, next) {
             }).save()
         }
     }).then(function(newCategory) {
-        res.render('admin/success', {
+        res.render('admin/success.html', {
             userInfo: req.userInfo,
             message: '分类保存成功',
             url: '/admin/category'
@@ -127,12 +127,12 @@ router.get('/category/edit', function(req, res, next) {
     var id = req.query.id || ''
     Category.findById(id).then(function(category) {
         if (!category) {
-            res.render('admin/error', {
+            res.render('admin/error.html', {
                 userInfo: req.userInfo,
                 message: '分类信息不存在'
             })
         } else {
-            res.render('admin/category_edit', {
+            res.render('admin/category_edit.html', {
                 userInfo: req.userInfo,
                 category: category
             })
@@ -148,14 +148,14 @@ router.post('/category/edit', function(req, res, next) {
         _id: id
     }).then(function(category) {
         if (!category) {
-           res.render('admin/error', {
+           res.render('admin/error.html', {
                userInfo: req.userInfo,
                message: '分类不存在'
            })
            return Promise.reject()
         } else {
             if (name === category.name) {
-                res.render('admin/error', {
+                res.render('admin/error.html', {
                     userInfo: req.userInfo,
                     message: '没有做任何更改',
                     url: '/admin/category'
@@ -171,7 +171,7 @@ router.post('/category/edit', function(req, res, next) {
         }
     }).then(function(sameCategory) {
         if (sameCategory) {
-            res.render('admin/success', {
+            res.render('admin/success.html', {
                 userInfo: req.userInfo,
                 message: '该分类名称已存在'
             })
@@ -184,7 +184,7 @@ router.post('/category/edit', function(req, res, next) {
             })
         }
     }).then(function() {
-        res.render('admin/success', {
+        res.render('admin/success.html', {
             userInfo: req.userInfo,
             message: '修改成功',
             url: '/admin/category'
@@ -199,7 +199,7 @@ router.get('/category/delete', function(req, res, next) {
     Category.deleteOne({
         _id: id
     }).then(function() {
-        res.render('admin/success', {
+        res.render('admin/success.html', {
             userInfo: req.userInfo,
             message: '删除成功',
             url: '/admin/category'
@@ -223,7 +223,7 @@ router.get('/content', function(req, res, next) {
 
         Content.find().sort({_id: -1}).limit(pageSize).skip(start).populate(['category', 'user'])
             .then(function(contents) {
-                res.render('admin/content_index', {
+                res.render('admin/content_index.html', {
                     userInfo: req.userInfo,
                     contents: contents,
                     page: page,
@@ -238,7 +238,7 @@ router.get('/content', function(req, res, next) {
 // 添加文章
 router.get('/content/add', function(req, res, next) {
     Category.find().sort({_id: -1}).then(function(categories) {
-        res.render('admin/content_add', {
+        res.render('admin/content_add.html', {
             userInfo: req.userInfo,
             categories: categories
         })
@@ -249,14 +249,14 @@ router.get('/content/add', function(req, res, next) {
 // 添加文章提交
 router.post('/content/add', function(req, res, next) {
     if (!req.body.category) {
-        res.render('admin/error', {
+        res.render('admin/error.html', {
             userInfo: req.userInfo,
             message: '分类不能为空'
         })
         return
     }
     if (!req.body.title) {
-        res.render('admin/error', {
+        res.render('admin/error.html', {
             userInfo: req.userInfo,
             message: '标题不能为空'
         })
@@ -269,7 +269,7 @@ router.post('/content/add', function(req, res, next) {
         description: req.body.description,
         content: req.body.content
     }).save().then(function() {
-        res.render('admin/success', {
+        res.render('admin/success.html', {
             userInfo: req.userInfo,
             message: '文章添加成功',
             url: '/admin/content'
@@ -285,13 +285,13 @@ router.get('/content/edit', function(req, res, next) {
             _id: id
         }).then(function(content) {
             if (!content) {
-                res.render('admin/error', {
+                res.render('admin/error.html', {
                     userInfo: req.userInfo,
                     message: '文章不存在'
                 })
                 return Promise.reject()
             } else {
-                res.render('admin/content_edit', {
+                res.render('admin/content_edit.html', {
                     userInfo: req.userInfo,
                     categories: categories,
                     content: content
@@ -305,20 +305,20 @@ router.get('/content/edit', function(req, res, next) {
 router.post('/content/edit', function(req, res, next) {
     var id = req.query.id || ''
     if (!req.body.category) {
-        res.render('admin/error', {
+        res.render('admin/error.html', {
             userInfo: req.userInfo,
             message: '分类不能为空'
         })
         return
     }
     if (!req.body.title) {
-        res.render('admin/error', {
+        res.render('admin/error.html', {
             userInfo: req.userInfo,
             message: '标题不能为空'
         })
         return
     }
-    Content.update({
+    Content.updateOne({
         _id: id
     }, {
         category: req.body.category,
@@ -327,7 +327,7 @@ router.post('/content/edit', function(req, res, next) {
         description: req.body.description,
         content: req.body.content
     }).then(function() {
-        res.render('admin/success', {
+        res.render('admin/success.html', {
             userInfo: req.userInfo,
             message: '文章修改成功',
             url: '/admin/content'
@@ -341,7 +341,7 @@ router.get('/content/delete', function(req, res, next) {
     Content.deleteOne({
         _id: id
     }).then(function() {
-        res.render('admin/success', {
+        res.render('admin/success.html', {
             userInfo: req.userInfo,
             message: '文章删除成功',
             url: '/admin/content'
