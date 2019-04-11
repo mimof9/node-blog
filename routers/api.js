@@ -30,6 +30,8 @@ router.post('/user/register', function(req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
     var repassword = req.body.repassword;
+    console.log(req)
+    console.log(req.body, username, password, repassword)
     if (username === '') {
         responseData.code = 1;
         responseData.message = '用户名不能为空';

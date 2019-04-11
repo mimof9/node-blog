@@ -19,17 +19,40 @@ $(function() {
     // 注册
     $registerBox.find('button').on('click', function() {
         // 通过ajax提交请求
-        $.ajax({
-            type: 'post',
-            url: '/api/user/register',
-            data: {
-                username: $registerBox.find('[name="username"]').val(),
-                password: $registerBox.find('[name="password"]').val(),
-                repassword: $registerBox.find('[name="repassword"]').val()
+        // $.ajax({
+        //     type: 'post',
+        //     url: '/api/user/register',
+        //     data: {
+        //         username: $registerBox.find('[name="username"]').val(),
+        //         password: $registerBox.find('[name="password"]').val(),
+        //         repassword: $registerBox.find('[name="repassword"]').val()
+        //     },
+        //     dataType: 'json',
+        //     success: function(result) {
+        //         // 显示注册结果
+        //         $registerBox.find('.colWarning').html(result.message)
+        //         // 注册成功，1s后跳转
+        //         if (result.code === 0) {
+        //             setTimeout(function() {
+        //                 $loginBox.show();
+        //                 $registerBox.hide();
+        //             }, 1000)
+        //         }
+        //
+        //     }
+        // })
+        fetch('/api/user/register', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            dataType: 'json',
-            success: function(result) {
-                // 显示注册结果
+            body: JSON.stringify({
+                "username": $registerBox.find('[name="username"]').val(),
+                "password": $registerBox.find('[name="password"]').val(),
+                "repassword": $registerBox.find('[name="repassword"]').val()
+            })
+        }).then(response => response.json())
+            .then(result => {
                 $registerBox.find('.colWarning').html(result.message)
                 // 注册成功，1s后跳转
                 if (result.code === 0) {
@@ -38,9 +61,7 @@ $(function() {
                         $registerBox.hide();
                     }, 1000)
                 }
-
-            }
-        })
+            })
     })
 
     // 登录

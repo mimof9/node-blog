@@ -69,9 +69,10 @@ $(function() {
     </tr>`
                     // 重点是除了添加dom节点外 还要添加响应事件
                     var newEle = $('.table tr:first').after(tr).next()
-                    console.log(newEle)
-                    $(newEle[0].getElementsByClassName('deleteCategory')[0]).on('click', deleteCategory)
-                    $(newEle[0].getElementsByClassName('editCategory')[0]).on('click', editCategory)
+                    var edit = $('.table tr:nth-of-type(2) .editCategory')
+                    var del = $('.table tr:nth-of-type(2) .deleteCategory')
+                    edit.on('click', editCategory)
+                    del.on('click', deleteCategory)
                     // 重置
                     $('#name').val('')
                 }

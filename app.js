@@ -31,6 +31,7 @@ env.addFilter('formattime', function(time) {
 // 配置bodyParser
 // 调用这个方法，会自动在路由回调的req中添加上请求携带的数据body
 // 要在配置路由之前调用(这个根据一个请求的处理顺序 很容易理解)
+app.use(bodyParser.json()); // 处理json格式的请求数据
 app.use(bodyParser.urlencoded({extended: true}))
 
 // 配置cookies
