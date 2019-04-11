@@ -171,6 +171,11 @@ nav .menu a {
     line-height: 56px;
     text-decoration: none;
 }
+
+nav .menu a:link, nav .menu a:visited {
+    color: #551A8B;
+}
+
 nav .menu a:hover, nav .menu a.focus {
     margin-bottom: -2px;
     border-bottom: 2px solid #e67e22;
