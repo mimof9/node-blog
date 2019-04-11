@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router()
 var User = require('../models/User')
 var Content = require('../models/Content')
+var Category = require('../models/Category')
 
 // 统一的返回格式
 var responseData;
@@ -143,6 +144,94 @@ router.get('/comment', function(req, res) {
         res.json(responseData)
     }).catch(function(err) {
         console.log(err)
+    })
+})
+
+// 添加分类
+router.post('/category/add', function(req, res, next) {
+    var name = req.body.name || ''
+    if (name === '') {
+        responseData.code = 1
+        responseData.message = '名称不能为空'
+        res.json(responseData)
+        return;
+    }
+
+    Category.findOne({
+        name: name
+    }).then(function(rs) {
+        if (rs) {
+            responseData.code = 2
+            responseData.message = '分类已存在'
+            res.json(responseData)
+            return Promise.reject()
+        } else {
+            return new Category({
+                name: name
+            }).save()
+        }
+    }).then(function(newCategory) {
+        responseData.message = '分类保存成功'
+        responseData.data = newCategory
+        res.json(responseData)
+    })
+})
+
+// 删除分类
+router.get('/category/delete', function(req, res, next) {
+    var id = req.query.id
+
+    Category.deleteOne({
+        _id: id
+    }).then(function() {
+        responseData.code = 0
+        responseData.message = '删除成功'
+        res.json(responseData)
+    })
+})
+
+// 修改分类
+router.post('/category/edit', function(req, res, next) {
+    var id = req.query.id || ''
+    var name = req.body.name || ''
+    Category.findOne({
+        _id: id
+    }).then(function(category) {
+        if (!category) {
+            responseData.code = 1
+            responseData.message = '分类不存在'
+            res.json(responseData)
+            return Promise.reject()
+        } else {
+            if (name === category.name) {
+                responseData.code = 2
+                responseData.message = '没有做任何更改'
+                res.json(responseData)
+                return Promise.reject()
+            } else {
+                // 查询数据库中是否已经存在相同名称
+                return Category.findOne({
+                    _id: {$ne: id},
+                    name: name
+                })
+            }
+        }
+    }).then(function(sameCategory) {
+        if (sameCategory) {
+            responseData.code = 3
+            responseData.message = '该分类名称已存在'
+            res.json(responseData)
+            return Promise.reject()
+        } else {
+            return Category.updateOne({
+                _id: id
+            }, {
+                name: name
+            })
+        }
+    }).then(function() {
+        responseData.message = '修改成功'
+        res.json(responseData)
     })
 })
 

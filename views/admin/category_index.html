@@ -1,6 +1,12 @@
 {% extends './layout.html' %}
 
 {% block main %}
+<style type="text/css">
+    input {
+        border: none;
+        outline: none;
+    }
+</style>
 
 <ol class="breadcrumb">
     <li><a href="/">管理首页</a></li>
@@ -8,6 +14,8 @@
 </ol>
 
 <h3>分类列表</h3>
+
+<p class="colWarning textCenter">加载完成</p>
 
 <table class="table table-hover table-striped">
     <tr>
@@ -18,14 +26,22 @@
 
     {% for category in categories %}
     <tr>
-        <td>{{category._id.toString()}}</td>
-        <td>{{category.name}}</td>
+        <td class="cid">{{category._id.toString()}}</td>
+        <td><input type="text" value="{{category.name}}" autocomplete="off"></td>
         <td>
-            <a href="/admin/category/edit?id={{category._id.toString()}}">修改</a>
-            <a href="/admin/category/delete?id={{category._id.toString()}}">删除</a>
+<!--            <a href="/admin/category/edit?id={{category._id.toString()}}">修改</a>-->
+<!--            <a href="/admin/category/delete?id={{category._id.toString()}}">删除</a>-->
+            <a href="javascript:;" class="editCategory">修改</a>
+            <a href="javascript:;" class="deleteCategory">删除</a>
         </td>
     </tr>
     {% endfor %}
+    <tr>
+        <td colspan="2" style="text-align: center;">
+            <input id="name" type="text" placeholder="请输入分类名称" autocomplete="off">
+        </td>
+        <td><a href="javascript:;" id="addCategory">添加</a></td>
+    </tr>
 </table>
 
 {% include './page.html' %}
