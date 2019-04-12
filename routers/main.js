@@ -2,6 +2,19 @@ var express = require('express')
 var router = express.Router()
 var Category = require('../models/Category')
 var Content = require('../models/Content')
+var marked = require('marked')
+// 配置marked
+marked.setOptions({
+    renderer: new marked.Renderer(),
+    pedantic: false,
+    gfm: true,
+    tables: true,
+    breaks: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false,
+    xhtml: false
+})
 
 var data;
 
@@ -62,13 +75,14 @@ router.get('/view', function(req, res, next) {
     Content.findOne({
         _id: contentId
     }).then(function (content) {
+        // 把markdown格式内容转换成html格式返回
+        content.content = marked(content.content)
         data.content = content
         // 阅读数统计真的简单
         content.views++
         content.save()
         res.render('main/view.html', data)
     })
-
 })
 
 module.exports = router

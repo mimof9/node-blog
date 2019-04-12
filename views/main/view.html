@@ -10,7 +10,23 @@
         阅读：<span class="colInfo">{{content.views}}</span> -
         评论：<span class="colInfo">{{content.comments.length}}</span>
     </p>
-    <dfn>{{content.content}}</dfn>
+    <div style="display: none;">{{content.content}}</div>
+    <script type="text/javascript">
+        function decodeHTML (str){
+            var s = "";
+            if(str.length == 0) return "";
+            s = str.replace(/&amp;/g,"&");
+            s = s.replace(/&lt;/g,"<");
+            s = s.replace(/&gt;/g,">");
+            s = s.replace(/&nbsp;/g," ");
+            s = s.replace(/&#39;/g,"\'");
+            s = s.replace(/&quot;/g,"\"");
+            return s;
+        }
+
+        var $content = $('.listBox div')
+        $content.html(decodeHTML($content.html())).show()
+    </script>
 </div>
 
 <div class="listBox message">

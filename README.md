@@ -4,6 +4,7 @@
 # 版本历史
 - v1.0 博客基本的业务流程已实现
 - v1.1 模板引擎改用Nunjucks
+- v1.2 后台使用marked提供markdown语法编辑内容
 
 # bug：
 	1. 当没有登陆时，点击阅读，comment.js会报错 不影响使用
@@ -62,9 +63,9 @@
 ### 第三方模块&中间件
 - bodyParser：解析post请求数据
 - cookies：读/写cookie
-- swig：模板解析引擎
+- nunjucks：模板解析引擎
 - mongoose：操作mongodb数据
-- markdown：markdown语法解析生成模块
+- marked：marked语法解析生成模块
 
 ## web开发的大体思路
 - 浏览器发送http请求
