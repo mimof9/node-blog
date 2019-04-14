@@ -75,13 +75,16 @@ router.get('/view', function(req, res, next) {
     Content.findOne({
         _id: contentId
     }).then(function (content) {
-        // 把markdown格式内容转换成html格式返回
-        content.content = marked(content.content)
-        data.content = content
         // 阅读数统计真的简单
         content.views++
-        content.save()
-        res.render('main/view.html', data)
+        content.save().then(function() {
+            // 保存不能放在markdown格式转换之后 否则会把markdown格式转换成html格式保存回数据库
+            // 单纯的放在前面也不管用，因为保存方法是异步方法
+            // 把markdown格式内容转换成html格式返回
+            content.content = marked(content.content)
+            data.content = content
+            res.render('main/view.html', data)
+        })
     })
 })
 
