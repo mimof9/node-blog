@@ -3,6 +3,7 @@
 {% block main %}
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script type="text/javascript" src="/public/js/wangEditor.min.js"></script>
 
 <ol class="breadcrumb">
     <li><a href="/">管理首页</a></li>
@@ -35,22 +36,41 @@
         <textarea name="description" id="description" cols="30" rows="5"
                   class="form-control" placeholder="请输入简介">{{content.description}}</textarea>
     </div>
-    <div class="form-group">
-        <label for="content">内容：</label>
-        <textarea name="content" id="content" cols="30" rows="10"
-                  class="form-control" placeholder="请输入内容">{{content.content}}</textarea>
-    </div>
 
-    <div class="form-group">
-        <label for="content">展示内容：</label>
-        <div id="showContent"></div>
-    </div>
+    <div id="editor"></div>
+    <textarea name="content" id="content" style="display: none;">{{content.content}}</textarea>
+
+    <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+    <script type="text/javascript">
+        var E = window.wangEditor
+        var editor = new E('#editor')
+        // 或者 var editor = new E( document.getElementById('editor') )
+        editor.create()
+        // console.log($('#content').text())
+        // 直接在div里初始化有bug, 还是要用{{}}初始化 然后dom获取text 再用editor.text.html设定内容
+        editor.txt.html($('#content').text())
+    </script>
+
+    <!--<div class="form-group">-->
+        <!--<label for="content">内容：</label>-->
+        <!--<textarea name="content" id="content" cols="30" rows="10"-->
+                  <!--class="form-control" placeholder="请输入内容">{{content.content}}</textarea>-->
+    <!--</div>-->
+
+    <!--<div class="form-group">-->
+        <!--<label for="content">展示内容：</label>-->
+        <!--<div id="showContent"></div>-->
+    <!--</div>-->
 
     <button type="submit" class="btn btn-default">提交</button>
 </form>
 
 <script>
-    $('#showContent').html(marked($('#content').html()))
+    // $('#showContent').html(marked($('#content').html()))
+    $('.btn').on('click', function() {
+        $('#content').html(editor.txt.html())
+        return true
+    })
 </script>
 
 {% endblock %}
