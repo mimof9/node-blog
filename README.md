@@ -6,6 +6,7 @@
 - v1.1 模板引擎改用Nunjucks
 - v1.2 后台使用marked提供markdown语法编辑内容
 - v1.3 后台使用wangEditor提供富文本编辑器
+- v1.4 评论和编辑内容添加脚本过滤，防范xss
 
 # bug：
 	1. 当没有登陆时，点击阅读，comment.js会报错 不影响使用。原因是没有处理好promise的出错情况
@@ -26,7 +27,7 @@
 	3. 用fetch替换掉ajax 用querySelector替换掉$() 没有用到JQuery的其它功能
 
 # 下一个版本
-	解决XSS攻击
+    react或者vue 重构整个项目
 
 # 最终期望
 整理博客业务流程和相关实现细节
@@ -75,6 +76,8 @@
 - nunjucks：模板解析引擎
 - mongoose：操作mongodb数据
 - marked：marked语法解析生成模块
+- wangEditor: 富文本编辑器
+- xss：xss攻击
 
 ## web开发的大体思路
 - 浏览器发送http请求

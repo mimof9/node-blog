@@ -2,6 +2,9 @@ var perpage = 10,
     page = 1,
     comments = []       // 理解这些东西为啥要搞成全局
 
+// var html = xss('<script>alert("xss");</script>');
+// console.log(html);
+
 // 页面加载的时候，重新获取评论
 $.ajax({
     url: '/api/comment',
@@ -76,13 +79,14 @@ function renderComment() {
     } else {
         var html = ''
         for (var i=start; i<end; i++) {
+            let xssContent = filterXSS(comments[i].content)
             html += `
 <div class="messageBox">
     <p class="name clear">
         <span class="fl">${comments[i].username}</span>
         <span class="fr">${formDate(comments[i].postTime)}</span>
     </p>
-    <p>${comments[i].content}</p>
+    <p>${xssContent}</p>
 </div>`
         }
         $('.messageList').html(html)

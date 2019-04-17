@@ -2,6 +2,13 @@
 
 {% block content %}
 
+<script src="/public/js/xss.js"></script>
+<script>
+    // 使用函数名 filterXSS，用法一样
+    // var html = filterXSS('<script>alert("xss");</scr' + 'ipt>');
+    // alert(html);
+</script>
+
 <div class="listBox">
     <h1>{{content.title}}</h1>
     <p class="colDefault">
@@ -23,9 +30,13 @@
             s = s.replace(/&quot;/g,"\"");
             return s;
         }
-
         var $content = $('.listBox div')
-        $content.html(decodeHTML($content.html())).show()
+        var htmlStr = decodeHTML($content.html())
+        var xssStr = filterXSS(htmlStr)
+        // console.log(0, $content.html())
+        // console.log(1, htmlStr)
+        // console.log(2, xssStr)
+        $content.html(xssStr).show()
     </script>
 </div>
 
