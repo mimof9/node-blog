@@ -56,6 +56,19 @@ app.use(function(req, res, next) {
     }
 })
 
+// 解决跨域
+app.all('*',function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With');
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+    if (req.method == 'OPTIONS') {
+        res.send(200);
+    }
+    else {
+        next();
+    }
+});
+
 // 模块化，不在这个文件中处理实际业务
 app.use('/', require('./routers/main'))
 app.use('/admin', require('./routers/admin'))
